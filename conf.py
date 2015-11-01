@@ -22,11 +22,18 @@ def extract_rss_urls_from_opml(filename):
         if url:
             urls.append(url)
     return urls
-        
+def read_stop_words(filename='stops.txt'):
+    stops = set()
+    with codecs.open(filename, 'r', 'utf-8') as inf:
+        for l in inf:
+            stops.add(l.strip())
+    return stops    
 def init():
     global rss_file
     global rss_urls
+    global stop_persian
     rss_file_plain_text = 'urls.txt'
     rss_file_opml = 'urls.xml'
     #rss_urls = extract_rss_urls_plain_text(rss_file_plain_text)
     rss_urls = extract_rss_urls_from_opml(rss_file_opml)
+    stop_persian = read_stop_words('stops.txt')
